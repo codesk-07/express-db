@@ -1,39 +1,18 @@
 const express = require('express')
-const mysql = require('mysql2')
+const db = require(`./utils/db-connection`)
+const studentRoutes = require('./routes/studentsRoutes')
+
 const app = express();
+app.use(express.json());
 
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Password@123',
-    database: 'my_database'
-})
 
-connection.connect((err) =>{
-    if(err){
-        console.log(err)
-        return ;
-    }
-    console.log("connection has been created")
-
-    const creationQuery = `create table students(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20),
-    email VARCHAR(20)
-    )`    
-    connection.execute(creationQuery,(err) =>{
-        if(err){
-            console.log(err)
-            connection.end();
-            return;
-        }
-        console.log("table is created")
-    })
-})
 app.get('/',(req,res) =>{
-    res.send("helo");
+    res.send("Welcome to Student Management API");
 })
-app.listen(3000,(err) =>{
+
+
+app.use("/students",studentRoutes);
+app.listen(3000,() =>{
     console.log("server is running")
 })

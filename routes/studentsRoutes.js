@@ -1,7 +1,10 @@
-const express = require('express');
 
+const express = require('express');
 const studentController = require('../controllers/studentsController')
 const router = express.Router();
+
+
+
 router.post("/",studentController.addEntries)
 router.put("/:id",studentController.updateEntries)
 router.delete("/:id",studentController.deleteEntries)

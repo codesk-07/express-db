@@ -17,8 +17,7 @@ const Students =sequelize.define(
       email:{
         type:DataTypes.STRING,
         allowNull:false,
-    
-
+        
       }
 
 

@@ -3,6 +3,7 @@ const db = require('../utils/db-connection')
 const Student= require('../models/students');
 //const Students = require('../models/students');
 const IdentityCard = require('../models/identityCard');
+const department = require("../models/department");
 
 const addEntries = async (req,res)=>{
     try{
@@ -168,11 +169,36 @@ const updateEntries = async (req,res)=>{
     }
    }
 
+
+
+
+const addDepartmentWithStudent = async (req, res) => {
+    try {
+        const Department = await department.create(req.body.department);
+
+        const student = await Student.create({
+            ...req.body.student,
+            departmentId: Department.id
+        });
+
+        res.status(201).json({
+            Department,
+            student
+        });
+
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
+
+
+
    module.exports = {
     addEntries,
     updateEntries,
     deleteEntries,
     getStudent,
     getStudentById,
-    addValueToStudentAndIdentityCard
+    addValueToStudentAndIdentityCard,
+    addDepartmentWithStudent
 }

@@ -2,13 +2,13 @@ const {Sequelize,DataTypes} = require("sequelize");
 const sequelize = require("../utils/db-connection");
 
 const Students =sequelize.define(
-    'Students',
+    'students',
     {
       id:{
         type:DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement :true,
-        allowNull: false
+        allowNull:false
       },
       name:{
         type:DataTypes.STRING,

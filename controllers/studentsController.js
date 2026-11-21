@@ -1,6 +1,8 @@
 
 const db = require('../utils/db-connection')
-const Student= require('../models/students')
+const Student= require('../models/students');
+//const Students = require('../models/students');
+const IdentityCard = require('../models/identityCard');
 
 const addEntries = async (req,res)=>{
     try{
@@ -150,10 +152,27 @@ const updateEntries = async (req,res)=>{
 
    }
 
+
+
+   const addValueToStudentAndIdentityCard = async(req, res)=>{
+    try {
+        const student = await Student.create(req.body.students)
+        const identityCard = await IdentityCard.create({
+            ...req.body.identityCard,
+            StudentId:student.id
+        })
+
+        res.status(200).json(student,identityCard);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+   }
+
    module.exports = {
     addEntries,
     updateEntries,
     deleteEntries,
     getStudent,
-    getStudentById
+    getStudentById,
+    addValueToStudentAndIdentityCard
 }
